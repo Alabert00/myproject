@@ -1,11 +1,22 @@
 let songs = [
-     {
+    {
         name: 'Enchanted',
-        path: 'musics/Enchanted.mp3',
+        path: 'musics/enchanted.mp3',
         artist: 'Taylor Swift',
         cover: 'images/tycover1.png'
     },
-    
+     {
+        name: 'You Belong With Me',
+        path: 'musics/You belong with me.mp3',
+        artist: 'Taylor Swift',
+        cover: 'images/tycover2.jpeg'
+    },
+    {
+        name: 'Love story',
+        path: 'musics/Love story.mp3',
+        artist: 'Taylor Swift',
+        cover: 'images/tycover3.jpg'
+    },
     {
         name: 'song 1',
         path: 'musics/Song 1.mp3',
