@@ -1,7 +1,7 @@
 let songs = [
     {
         name: 'Enchanted',
-        path: 'musics/enchanted.mp3',
+        path: 'musics/Enchanted.mp3',
         artist: 'Taylor Swift',
         cover: 'images/tycover1.png'
     },
