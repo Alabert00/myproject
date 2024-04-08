@@ -1,0 +1,368 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+<style>
+*{
+	margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body{
+	width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+	align-items: center;
+	background: #5f7a61;
+	font-family: 'roboto', sans-serif;
+}
+
+.music-player{
+	width: 350px;
+	height: 550px;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.08);
+	box-shadow: 0 40px 100px rgba(255, 255, 255, 0.1);
+	padding : 30px;
+	overflow: hidden;
+	color: #d5eebb;
+}
+
+.music-name,
+.artist-name{
+		text-align: center;
+		text-transform: capitalize;
+}
+
+.music-name{
+	font-size: 40px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.artist-name{
+	font-size: 20px;
+}
+
+.disk{
+	position: relative;
+	display: block;
+	margin: 40px auto;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	background-image: url('images/cover 1.png');
+	background-size: cover;
+	box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.08);
+	animation: rotate 20s linear infinite;
+	animation-play-state: paused;	
+}
+
+.disk.play{
+	animation-play-state: running;
+}
+
+.disk::before{
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #5f7a61;
+}
+
+.song-slider{
+	width: 100%;
+	position: relative;
+}
+
+.seek-bar{
+	-webkit-appearance: none;
+	width: 100%;
+	height: 5px;
+	border-radius: 10px;
+	background: #7fc8a9;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.seek-bar::-webkit-slider-thumb{
+	-webkit-appearance: none;
+	width: 1px;
+	height: 20px;
+	box-shadow: -400px 0 0 400px #d5eebb;
+}
+
+.current-time
+.song-duration{
+	font-size: 14px;
+}
+
+.song-duration{
+	position: absolute;
+	right: 0;
+}
+
+.controls{
+	width: 60%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+	margin-top: 20px;
+}
+
+.play-btn{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background: #d5eebb;
+	cursor: pointer;
+	border: none;
+}
+
+.play-btn span{
+	position: absolute;
+	top: 50%;
+	left: 25%;
+	transform: translateY(-50%);
+	width: 10px;
+	height: 30px;
+	border-radius: 2px;
+	background: #5f7a61;
+	transition: .5s;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.play-btn span:nth-child(2){
+	left: 55%;
+	transform-origin: center;
+}
+
+.play-btn.pause span:nth-child(2){
+	transform: translateY(-50%) scaleY(0);
+}
+
+.play-btn.pause span:nth-child(1){
+	width: 35%;
+	left: 53%;
+	transform: translate(-50%, -50%);
+	border-radius: 0;
+	clip-path: polygon(0 0, 100% 50%, 100% 50%, 0% 100%);
+}
+
+.play-btn.pause{
+	animation: pulse 2s linear infinite;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0;
+	}
+	50%{
+		box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1);
+	}
+	100%{
+		box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
+	}
+}
+
+.btn{
+	width: 40px;
+	height: 40px;
+	background: #d5eebb;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	cursor: pointer;
+}
+
+@keyframes rotate{
+	0%{
+		transform: rotate(0);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
+</style>
+
+</head>
+<body>
+	<audio src="" id="audio"></audio>
+
+	<div class="music-player">
+		<h1 class="music-name">Song One</h1>
+		<p class="artist-name">Artist</p>
+		
+		<div class="disk"></div>
+		
+		<div class="song-slider">
+			<input type="range" value="0" class="seek-bar">
+			<span class="current-time">00:00</span>
+			<span class="song-duration">00:00</span>
+		</div>
+		
+		<div class="controls">
+			<button class="btn backward-btn"><img src="images/pre.png" alt="">
+			</button>
+			<button class="play-btn pause">
+				<span></span>
+				<span></span>
+			</button>
+			<button class="btn forward-btn"><img src="images/nxt.png" alt="">
+			</button>
+		</div>
+	
+	</div>
+
+<script>
+let songs = [
+    {
+        name: 'Love Story',
+        path: 'musics/Song 1.mp3'
+        artist: 'Taylor Swift',
+        cover: 'images/cover 1.png'
+    },
+    {
+        name: 'Enchanted',
+        path: 'musics/Song 2.mp3',
+        artist: 'Taylor Swift',
+        cover: 'images/cover 2.png'
+    },
+    {
+        name: 'You Belong With Me',
+        path: 'musics/Song 3.mp3',
+        artist: 'Taylor Swift',
+        cover: 'images/cover 3.png'
+    },
+    {
+        name: 'song 4',
+        path: 'musics/Song 4.mp3',
+        artist: 'artist 4',
+        cover: 'images/cover 4.png'
+    },
+    {
+        name: 'song 5',
+        path: 'musics/Song 5.mp3',
+        artist: 'artist 5',
+        cover: 'images/cover 5.png'
+    },
+]
+</script>
+<script>
+let currentMusic = 0;
+
+const music = document.querySelector('#audio');
+
+const seekBar = document.querySelector('.seek-bar');
+const songName = document.querySelector('.music-name');
+const artistName = document.querySelector('.artist-name');
+const disk = document.querySelector('.disk');
+const currentTime = document.querySelector('.current-time');
+const musicDuration = document.querySelector('.song-duration');
+const playBtn = document.querySelector('.play-btn');
+const forwardBtn = document.querySelector('.forward-btn');
+const backwardBtn = document.querySelector('.backward-btn');
+
+playBtn.addEventListener('click', () => {
+	if(playBtn.className.includes('pause')){
+		music.play();
+	} else{
+		music.pause();
+	}
+	playBtn.classList.toggle('pause');
+	disk.classList.toggle('play');
+})
+
+//setup music
+
+const setMusic = (i) => {
+	seekBar.value = 0;
+	let song = songs[i];
+	currentMusic = i;
+	music.src = song.path;
+	
+	songName.innerHTML = song.name;
+	artistName.innerHTML = song.artist;
+	disk.style.backgroundImage = `url('${song.cover}')`;
+	
+	currentTime.innerHTML = '00:00';
+	setTimeout(() => {
+		seekBar.max = music.duration;
+		musicDuration.innerHTML = formatTime(music.duration);
+	}, 300);
+} 
+
+setMusic(0);
+
+// formatting time
+
+const formatTime = (time) => {
+	let min = Math.floor(time / 60);
+	if (min <10){
+		min = `0${min}`;
+	}
+	let sec = Math.floor(time % 60);
+	if (sec <10){
+		sec = `0${sec}`;
+	}
+	return `${min} : ${sec}`;
+}
+
+// seek bar
+setInterval(() => {
+	seekBar.value = music.currentTime;
+	currentTime.innerHTML = formatTime(music.currentTime);	
+	if(Math.floor(music.currentTime) == Math.floor(seekBar.max)){
+		forwardBtn.click();
+	}
+}, 500)
+
+seekBar.addEventListener('change', () => {
+	music.currentTime = seekBar.value;
+})
+
+const playMusic = () => {
+	music.play();
+	playBtn.classList.remove('pause');
+	disk.classList.add('play');
+}
+
+
+// forward and backward-btn
+forwardBtn.addEventListener('click', () => {
+	if(currentMusic >= songs.length - 1){
+		currentMusic = 0;
+	} else{
+		currentMusic++;
+	}
+	setMusic(currentMusic);
+	playMusic();
+})
+
+backwardBtn.addEventListener('click', () => {
+	if(currentMusic <= 0){
+		currentMusic = songs.length - 1;
+	} else{
+		currentMusic--;
+	}
+	setMusic(currentMusic);
+	playMusic();
+})
+</script>
+
+</body>
+</html>
+
