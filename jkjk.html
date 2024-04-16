@@ -8,7 +8,7 @@
     function ninth() { 
         if (document.all) { 
             (tenth); 
-            alert("Right Click Disable"); 
+            // alert("Right Click Disable"); 
             return false; 
         } 
     } 
@@ -28,7 +28,7 @@
         document.onmouseup = twelfth; 
         document.oncontextmenu = ninth; 
     } 
-    document.oncontextmenu = new Function('alert("Right Click Disable"); return false') 
+    document.oncontextmenu = new Function('return false') 
 </script> 
 </head>
 <body>
