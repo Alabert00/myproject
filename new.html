@@ -1,0 +1,18 @@
+<html>
+
+<script>
+  function disableRightClick(event) {
+    if (event.button == 2) {
+      event.preventDefault();
+      return false;
+    }
+  }
+</script>
+<body oncontextmenu="disableRightClick(event)">
+	<img src="images/tycover1.png" oncontextmenu="disableRightClick(event)" />
+	<br>
+	<img src="images/tycover2.jpeg" oncontextmenu="disableRightClick(event)" />
+	<br>
+	<img src="images/tycover3.jpg" oncontextmenu="disableRightClick(event)" />
+</body>
+</html>
